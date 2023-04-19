@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Game Question</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-image: url("background.jpg");
+  			background-repeat: no-repeat;
+  			background-size: cover;
+
+		}
+		
+		h1 {
+			color: #333;
+			text-align: center;
+		}
+		
+		.container {
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+		}
+		
+		form {
+			margin-top: 20px;
+		}
+		
+		button {
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			padding: 10px;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+			transition: background-color 0.3s;
+		}
+		
+		button:hover {
+			background-color: #3e8e41;
+		}
+		
+		input[type="radio"] {
+			margin: 10px;
+		}
+		
+		#result, #score {
+			margin-top: 20px;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		
+		#result.correct {
+			color: green;
+		}
+		
+		#result.incorrect {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Game Question</h1>
+		<p id="question">question 1</p>
+		<form>
+			<input type="radio" name="answer" value="1"> A<br>
+			<input type="radio" name="answer" value="2"> B<br>
+			<input type="radio" name="answer" value="3"> C<br>
+			<input type="radio" name="answer" value="4"> D<br>
+			<button type="button" onclick="checkAnswer()">Submit Answer</button>
+		</form>
+		<p id="result"></p>
+		<p id="score"></p>
+	</div>
+	<script>
+		let correctAnswer = 1;
+		let playerScore = 0;
+		let questionIndex = 0;
+		
+		const questions = [
+			{
+				question: "question 1",
+				answer: 4
+			},
+			{
+				question: "question 2",
+				answer: 2
+			},
+			{
+				question: "question 3",
+				answer: 3
+			},
+            {
+				question: "question 4",
+				answer: 2
+			},
+            {
+				question: "question 5",
+				answer: 3
+			}
+		];
+		function checkAnswer() {
+			const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+			if (selectedAnswer && selectedAnswer.value == correctAnswer) {
+				playerScore++;
+				document.getElementById("result").innerHTML = "Correct!";
+				document.getElementById("result").className = "correct";
+			} else {
+				document.getElementById("result").innerHTML = "incorrect.";
+				document.getElementById("result").className = "incorrect.";
+			}
+			
+			questionIndex++;
+			
+			if (questionIndex >= questions.length) {
+				document.getElementById("question").innerHTML = "Game Over";
+				document.getElementById("score").innerHTML = "Your score is: " + playerScore + " out of " + questions.length;
+				document.querySelector('button[type="button"]').disabled = true;
+			} else {
+				document.getElementById("question").innerHTML = questions[questionIndex].question;
+				correctAnswer = questions[questionIndex].answer;
+				document.querySelector('input[name="answer"]:checked').checked = false;
+			}
+		}
+		document.getElementById("question").innerHTML = questions[questionIndex].question;
+		correctAnswer = questions[questionIndex].answer;
+	</script>
+</body>
+</html>
